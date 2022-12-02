@@ -1,20 +1,23 @@
 # frozen_string_literal: true
 
-
 class Finder
   def self.call(string)
-    result = []
+    all_substrings = []
+    all_chars = string.chars
 
-    string.chars.each_with_index do |char, i|
-      if char == string[i-1]
-        result[-1] = result.last << char
+    all_chars.each_index do |index, char|
+      first_substring = char
+      if all_substrings[index-1].include(first_substring)
+        all_substrings[index-1] += first_substring
+      elsif index == 0
+        all_substrings << first_substring
       else
-        result << char
+        all_substrings << first_substring
       end
+
     end
 
-    result.sort_by! {|substr| substr.length}
-    result.last
+
+
   end
 end
-
